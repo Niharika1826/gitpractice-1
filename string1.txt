@@ -1,0 +1,76 @@
+class Email{
+               Header header;
+			String body;
+			String greetings;
+			Email(){}
+			Email(Header header, String body, String greetings){
+				this.header = header;
+				this.body = body;
+				this.greetings = greetings;
+			}
+}
+class Header{
+                  String from;
+			 String to;
+			 Header(){}
+			 Header(String from, String to){
+				 this.from = from;
+				 this.to = to;
+			 }
+
+}
+
+
+class EmailOperations{
+                
+	       
+		    public int emailVerify(Email e){
+				
+		 Pattern pattern =  Pattern.compile("^[a-zA-Z_]+[a-z]+@[a-z]+.[a-z]+$");
+		 Matcher matcher1 = pattern.matcher(e.header.from);
+		 Matcher matcher2 = pattern.matcher(e.header.to);
+
+		 if(matcher1.find()&&matcher2.find()){
+			 return 1;
+		 }
+		 return 0;
+ }
+           public String bodyEncryption(Email e){
+				       String body = e.body;
+				     
+				      String newBody="";
+
+
+        for(int i=0; i<body.length(); i++){
+             char ch=body.charAt(i);
+             newBody+=((char)(ch+3));
+            // newBody+=body.charAt(i)+3;
+            }
+        return newBody;
+			}	
+			public String greetingMessage(Email e){
+				
+			String greetings = e.greetings;
+                int index = e.header.from.indexOf("@");
+				String name = e.header.from.substring(0,index);
+				 greetings = e.greetings.concat(name);
+				return greetings;
+			} 	
+	
+}
+
+
+public class Source {
+	public static void main(String args[] ) throws Exception {
+		/* Enter your code here. Read input from STDIN. Print output to STDOUT */
+         Header header = new Header();
+		 Email email = new Email();
+		 EmailOperations operations = new EmailOperations();
+		 
+		  operations.emailVerify(email);
+		 
+		 String string1 = operations.bodyEncryption(email);
+		 System.out.println(string1);
+		 String string2 = operations.greetingMessage(email);
+		 System.out.println(string2);
+		 
